@@ -15,8 +15,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9
     rm -rf /var/lib/apt/lists/*
 
 COPY sshd_config /etc/ssh/
-COPY init_container.sh /tmp/
-RUN chmod 755 /tmp/init_container.sh
 
 COPY azureconntest-1.0-SNAPSHOT.jar /tmp/
 
