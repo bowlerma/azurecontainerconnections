@@ -11,11 +11,13 @@ public class ConnectionTest {
 
     public static void main(String[] args) throws SQLException {
 
-        int numberOfConnections = Integer.valueOf(args[2]);
-        String user = args[0];
-        String password = args[1];
+        String url = args[0];
+        String database = args[1];
+        String user = args[2];
+        String password = args[3];
+        int numberOfConnections = Integer.valueOf(args[4]);
 
-        String connectionURL = "jdbc:sqlserver://pfeudevintsql.database.windows.net:1433;databaseName=kitkat-mbr1;" +
+        String connectionURL = "jdbc:sqlserver://" + url + ":1433;databaseName=" + database + ";" +
                 "loginTimeout=60;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows" +
                 ".net;userName=" + user + ";password=" + password;
 
@@ -45,7 +47,7 @@ public class ConnectionTest {
                 }
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
