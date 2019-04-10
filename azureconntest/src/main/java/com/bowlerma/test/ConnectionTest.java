@@ -16,6 +16,7 @@ public class ConnectionTest {
         String user = args[2];
         String password = args[3];
         int numberOfConnections = Integer.valueOf(args[4]);
+        int sleepTime = Integer.valueOf(args[5]);
 
         String connectionURL = "jdbc:sqlserver://" + url + ":1433;databaseName=" + database + ";" +
                 "loginTimeout=60;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows" +
@@ -47,7 +48,7 @@ public class ConnectionTest {
                 }
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(sleepTime );
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
