@@ -2,6 +2,8 @@ package com.bowlerma.test;
 
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,15 +31,21 @@ public class ConnectionTest {
 
         try {
             for (int i = 1; i <= numberOfConnections; i++) {
+                Instant connStart = Instant.now();
                 Connection connection = DriverManager.getConnection(connectionURL);
+                Instant connEnd = Instant.now();
                 connections.add(connection);
                 Statement statement = null;
                 ResultSet results = null;
                 try {
                     statement = connection.createStatement();
+                    Instant queryStart = Instant.now();
                     results = statement.executeQuery(sql);
+                    Instant queryEnd = Instant.now();
                     results.next();
-                    System.out.println(i + ":" + results.getInt(1));
+                    System.out.println(i + ":" + results.getInt(1) + ":"
+                            + Duration.between(connStart, connEnd).toMillis() + ":"
+                            + Duration.between(queryStart, queryEnd).toMillis());
                 } finally {
                     if (Objects.nonNull(results)) {
                         results.close();
