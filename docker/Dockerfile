@@ -5,6 +5,8 @@ RUN mkdir /var/run/sshd
 
 RUN echo 'root:Docker!' | chpasswd
 
+RUN apt-get update && apt-get -y install apache2
+
 ENV JAVA_HOME=/usr/lib/jvm/zulu-8-amd64
 
 # Zulu installation
@@ -16,7 +18,12 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9
 
 COPY sshd_config /etc/ssh/
 
-COPY azureconntest-1.0-SNAPSHOT.jar /tmp/
+COPY startup.sh /startup.sh
+RUN chmod +x /startup.sh
 
-EXPOSE 2222 80
-CMD ["/usr/sbin/sshd", "-D"]
+COPY azureconntest-1.0-SNAPSHOT.jar /tmp/
+COPY azureconntest-1.0-SNAPSHOT-jar-with-dependencies.jar /tmp/
+COPY ports.conf /etc/apache2/ports.conf
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+ENTRYPOINT ["/startup.sh"]
