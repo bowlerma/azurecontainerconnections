@@ -13,3 +13,9 @@ For example:
 ```
 java -jar azureconntest-1.0-SNAPSHOT.jar dudetest.database.windows.net dudetest mhrdev1 Pass1234 1000 500
 ```
+
+To build a multi-platform container:
+
+```sh
+docker build --platform linux/amd64,linux/arm64 -t <image> .
+```
